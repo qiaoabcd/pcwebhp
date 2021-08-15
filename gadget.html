@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>小工具</title>
+	</head>
+	<!-- Bootstrap -->
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<!-- jQuery -->
+	<script src="https://code.jquery.com/jquery.js"></script>
+	<style>
+		.box {
+			width: 550px;
+			margin: 50px auto 0 auto;
+		}
+
+		.tdf-box {
+			display: flex;
+		}
+		.input-group {
+			margin-top: 20px;
+		}
+		.btn-box {
+			width: 200px;
+			margin: 20px auto 0 auto;
+		}
+		.btn-box >div{
+			display: flex;
+			justify-content: space-between;
+		}
+		.tdf-box {
+			display: flex;
+			justify-content: space-between;
+		}
+		.tdf-box>div {
+			width: 250px;
+		}
+	</style>
+	<body >
+		<div class="box" id="app">
+			<div class="tdf-box">
+				<div class="input-group">
+					<span class="input-group-addon" id="basic-addon1">请输入“ / ” 替代符</span>
+					<input type="text" class="form-control" v-model="xgtdf" placeholder="请输入您设置的 / 替代符"
+						aria-describedby="basic-addon1">
+				</div>
+				<div class="input-group">
+					<span class="input-group-addon" id="basic-addon1">请输入“ : ” 替代符</span>
+					<input type="text" class="form-control" v-model="mhtdf" placeholder="请输入您设置的 / 替代符"
+						aria-describedby="basic-addon1">
+				</div>
+			</div>
+			<div class="input-group">
+				<span class="input-group-addon" id="basic-addon1">请输入地址</span>
+				<input type="text" class="form-control" v-model="input" placeholder="请输入/ : 被替换的地址"
+					aria-describedby="basic-addon1">
+			</div>
+			<div class="input-group">
+				<span class="input-group-addon" id="basic-addon1">结果</span>
+				<input type="text" class="form-control" ref="resultEl" v-model="result" placeholder="" aria-describedby="basic-addon1">
+			</div>
+			
+			<div class="btn-box">
+				<div>
+					<button type="button" @click="gotoPage" class="btn btn-default dropdown-toggle"  aria-haspopup="true"
+						aria-expanded="false">
+						点击跳转
+					</button>
+					<button type="button" @click="copy" class="btn btn-default dropdown-toggle"  aria-haspopup="true"
+						aria-expanded="false">
+						点击复制
+					</button>
+				</div>
+			</div>
+		</div>
+
+		
+	</body>
+
+	<script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+	<script>
+		new Vue({
+			el: '#app',
+			data: {
+				mhtdf: '#',  // 冒号替代符
+				xgtdf: '@',  // 斜杠替代符
+				input: '',   // 输入的地址
+			},
+			methods: {
+				gotoPage: function() {
+					window.open(this.result);
+				},
+				copy: function() {
+					this.$refs.resultEl.select()
+					document.execCommand('copy');
+				}
+			},
+			computed: {
+				result: function() {
+					return this.input.replace(eval('/[' + this.xgtdf +']/g'), '/').replace(eval('/[' +　this.mhtdf +']/g'), ':');
+				}
+			}
+		})
+	</script>
+</html>
